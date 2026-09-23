@@ -139,11 +139,11 @@ its `expires_at`, it's evicted on the spot and treated as absent (`get`
 returns `-1`; `put` treats it as a fresh insert).
 
 **Trade-offs of the lazy approach:**
-- ✅ Keeps `get`/`put` O(1) with no extra data structures (no timer heap,
+-  Keeps `get`/`put` O(1) with no extra data structures (no timer heap,
   no background thread/sweeper, no locks).
-- ✅ Simple and correct: an expired key is *never* returned to the caller,
+-  Simple and correct: an expired key is *never* returned to the caller,
   even if it hasn't been physically removed yet.
-- ❌ A key that expires and is never accessed again will sit in memory
+- git A key that expires and is never accessed again will sit in memory
   (and count against `capacity`) until it's evicted by normal LRU
   pressure or happens to be looked up. This is a **memory/precision**
   trade-off, not a correctness one — capacity is still enforced, so
